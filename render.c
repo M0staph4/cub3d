@@ -7,8 +7,8 @@ void	render_line(t_cub *data, int color)
 	double pixelX = data->xpos;
 	double pixelY = data->ypos;
 	
-	deltaX = (data->xpos + cos(data->rotation_angle) * 50) - data->xpos;
-	deltaY = (data->ypos + sin(data->rotation_angle) * 50) - data->ypos;
+	deltaX = (data->xpos + cos(data->rotation_angle) * 20) - data->xpos;
+	deltaY = (data->ypos + sin(data->rotation_angle) * 20) - data->ypos;
 	int pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
@@ -28,7 +28,7 @@ void	render_player(t_cub *data, int r)
 	{
 		x1 = r * cos(angle * PI / 180);
 		y1 = r * sin(angle * PI / 180);
-		mlx_pixel_put(data->mlx, data->mlx_win, (data->xpos) + x1, (data->ypos) + y1, 0xFFFFFF);
+		mlx_pixel_put(data->mlx, data->mlx_win, (data->xpos) + x1, (data->ypos) + y1, 0x40E0D0);
 		angle += 0.1;
 	}
 }
@@ -66,6 +66,6 @@ void	render_map(t_cub *data)
 		}
 		j++;
 	}
-	render_line(data, 0xFFFFFF);
+	render_line(data, 0x40E0D0);
 	render_player(data, 5);
 }

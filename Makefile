@@ -1,6 +1,6 @@
 NAME = cub3d
 CC = cc
-CFLAGS = -Wall -Wextra -Werror 
+CFLAGS = -Wall -Wextra -Werror #-fsanitize=address
 SRCS = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c
 INC = -lmlx -framework OpenGL -framework AppKit 
 

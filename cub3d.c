@@ -25,19 +25,21 @@ char	**read_map(int i)
 
 int key_handler(int key, t_cub *data)
 {
-	
-	if(key == KEY_UP)
+	int i = 0;
+	if((key == KEY_UP && data->map[data->ypos / 50][data->xpos / 50] != '1') || i)
 	{
 		data->walk = 1;
-		data->move_step = data->walk + data->move_speed;
+		data->move_step = data->walk * data->move_speed;
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
+		if(data->map[data->ypos / 50][data->xpos / 50] != '1')
+			i = 1;
 		render_map(data);
 	}
 	else if(key == KEY_DOWN)
 	{
 		data->walk = -1;
-		data->move_step = data->walk + data->move_speed;
+		data->move_step = data->walk * data->move_speed;
 		data->xpos += cos(data->rotation_angle) * data->move_step;
 		data->ypos += sin(data->rotation_angle) * data->move_step;
 		render_map(data);
@@ -61,9 +63,9 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 5;
+	data->move_speed = 4;
 	data->rotation_angle = PI / 2;
-	data->rotation_speed = 4 * (PI / 180);
+	data->rotation_speed = 3 * (PI / 180);
 }
 
 void player_pos(t_cub *data)

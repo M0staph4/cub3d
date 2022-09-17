@@ -14,9 +14,9 @@ typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
     char	**map;
-    int     xpos;
-    int     ypos;
-	int		side;
+    double  xpos;
+    double  ypos;
+	double	side;
 	double	walk;
     double	rotation_angle;
 	double	move_speed;
