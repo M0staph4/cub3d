@@ -70,9 +70,9 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 10;
+	data->move_speed = 3;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 10 * (PI / 180);
+	data->rotation_speed = 3 * (PI / 180);
 }
 
 void player_pos(t_cub *data)
@@ -90,8 +90,32 @@ void player_pos(t_cub *data)
 				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
 			{
 				data->map[j][i] = '0';
-				data->xpos = i * g_i;
-				data->ypos = j * g_j;				
+				data->xpos = i * data->i_2D;
+				data->ypos = j * data->i_2D;				
+			}
+			i++;
+		}
+		j++;
+	}
+}
+
+void player_pos_2D(t_cub *data)
+{
+	int i;
+	int j;
+	j = 0;
+	player_init(data);
+	while (data->map[j])
+	{
+		i = 0;
+		while (data->map[j][i])
+		{
+			if (data->map[j][i] == 'N' || data->map[j][i] == 'E'
+				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
+			{
+				data->map[j][i] = '0';
+				data->xpos = i * data->i_2D;
+				data->ypos = j * data->i_2D;				
 			}
 			i++;
 		}
@@ -115,15 +139,17 @@ void	window(t_cub *data)
 	i = ft_strlen(data->map[0]);
 	while (data->map[j])
 		j++;
-	g_i = 500 / i;
-	g_j = 500 / i;
+	g_i = 1080 / i;
+	g_j = 50;
+	data->i_2D = 500 / i;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
-	data->img.mlx_img = mlx_new_image(data->mlx,1080, 720);
-	data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
-	player_pos(data);
+	// data->img.mlx_img = mlx_new_image(data->mlx, data->i_2D * i, data->i_2D * j);
+	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);
+	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
+	// data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
+	player_pos_2D(data);
 	render_map(data);
-	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img.mlx_img, 0, 0);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
 	mlx_loop(data->mlx);
 }
