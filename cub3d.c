@@ -75,30 +75,6 @@ void player_init(t_cub *data)
 	data->rotation_speed = 3 * (PI / 180);
 }
 
-void player_pos(t_cub *data)
-{
-	int i;
-	int j;
-	j = 0;
-	player_init(data);
-	while (data->map[j])
-	{
-		i = 0;
-		while (data->map[j][i])
-		{
-			if (data->map[j][i] == 'N' || data->map[j][i] == 'E'
-				|| data->map[j][i] == 'S' || data->map[j][i] == 'W')
-			{
-				data->map[j][i] = '0';
-				data->xpos = i * data->i_2D;
-				data->ypos = j * data->i_2D;				
-			}
-			i++;
-		}
-		j++;
-	}
-}
-
 void player_pos_2D(t_cub *data)
 {
 	int i;
@@ -130,24 +106,32 @@ void	pixel_put(t_img *data, int x, int y, int color)
 	*(int*)dst = color;
 }
 
+int	get_pixel_color(t_texture *tex)
+{
+	// int		color;
+	// color = (int)tex->img.addr[tex->texY * tex->img.line / (tex->img.bpp / 8) + tex->texX];
+	return ((int)tex->img.addr + (tex->texY * tex->img.line + tex->texX * (tex->img.bpp / 8)));
+}
+
+
 void	window(t_cub *data)
 {
 	int		i;
 	int		j;
-
+	int		x;
+	int		y;
 	j = 0;
 	i = ft_strlen(data->map[0]);
+	char	*path = "bluestone.xpm";
 	while (data->map[j])
 		j++;
-	g_i = 1080 / i;
-	g_j = 50;
-	data->i_2D = 500 / i;
+	data->i_2D = 50;
 	data->mlx = mlx_init();
-	data->mlx_win = mlx_new_window(data->mlx, 1080, 720, "Cub3d!");
-	// data->img.mlx_img = mlx_new_image(data->mlx, data->i_2D * i, data->i_2D * j);
-	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1080, 720);
+	data->mlx_win = mlx_new_window(data->mlx, 1600, 900, "Cub3d!");
+	data->img_3D.mlx_img = mlx_new_image(data->mlx, 1600, 900);
 	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
-	// data->img.addr = mlx_get_data_addr(data->img.mlx_img, &data->img.bpp, &data->img.line, &data->img.endian);
+	data->tex.texture = mlx_xpm_file_to_image(data->mlx, path, &x, &y);
+	data->tex.img.addr =  mlx_get_data_addr(data->tex.texture, &data->tex.img.bpp, &data->tex.img.line, &data->tex.img.endian);
 	player_pos_2D(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);

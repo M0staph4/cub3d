@@ -12,8 +12,8 @@
 #define PI 3.1415926535
 #define PI2 1.5708 //pi/2
 #define PI3 4.71239 //3pi/2
-#define WINDOW_WIDTH 1080
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 900
 typedef struct   s_img{
     void    *mlx_img;
     char    *addr;
@@ -22,8 +22,16 @@ typedef struct   s_img{
     int     line;
 }   t_img;
 
+typedef struct  s_texture{
+    void    *texture;
+    int     texX;
+    int     texY;
+    double  step;
+    double  texPos;
+    t_img   img;
+    
+}   t_texture;
 double g_i;
-double g_j;
 typedef struct s_cub{
     void	*mlx;
     void	*mlx_win;
@@ -41,11 +49,10 @@ typedef struct s_cub{
     double  player_dis;
     double  wall;
     int     i_2D;
-    int     j_2D;
-    t_img   img;
     double  pixelX;
     double  pixelY;
     t_img   img_3D;
+    t_texture tex;
 }   t_cub;
 
 
@@ -61,5 +68,7 @@ void	pixel_put(t_img *img, int x, int y, int color);
 void    raycasting(t_cub *data);
 void player_pos(t_cub *data);
 int check_wall_collision_2D(t_cub *data);
+int	get_pixel_color(t_texture *tex);
+void	render_fov(t_cub *data);
 
 #endif
