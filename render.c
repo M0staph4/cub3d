@@ -8,7 +8,7 @@ int line_length(t_cub *data, double x, double y)
 	return(1);
 }
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c)
+void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, int ray)
 {
 	int		pixels;
 
@@ -17,18 +17,18 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c)
 	pixels = sqrt((deltaX * deltaX) + (deltaY * deltaY));
 	deltaX /= pixels;
 	deltaY /= pixels;
-	data->wall_height = (WINDOW_HEIGHT / 2) / tan(30);
+	(void)c;
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-		if(c)
-	    	pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
+	    pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
-	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
+	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2)) * cos(ray);
     data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
-}
+	(void)ray;
 
+}
 
 void	render_player(t_cub *data, int r)
 {
@@ -65,23 +65,23 @@ void	render_square(t_cub *data, int x, int y, int color)
 	}
 }
 
-void	render_fov(t_cub *data)
-{
-	double	x;
-	double	l;
+// void	render_fov(t_cub *data)
+// {
+// 	double	x;
+// 	double	l;
 
-	x = -PI / 6;
-	l = data->rotation_angle;
-	double xx, y;
-	xx = (data->xpos / data->i_2D) * 20;
-	y = (data->ypos / data->i_2D) * 20;
-	while (x < PI / 6)
-	{
-		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1);
-		x += 0.001;
-	}
-	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1);
-}
+// 	x = -32;
+// 	l = data->rotation_angle;
+// 	double xx, y;
+// 	xx = (data->xpos / data->i_2D) * 20;
+// 	y = (data->ypos / data->i_2D) * 20;
+// 	while (x < 32)
+// 	{
+// 		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
+// 		x += 0.064 / 50;
+// 	}
+// 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
+// }
 
 void	render_map(t_cub *data)
 {
@@ -90,7 +90,6 @@ void	render_map(t_cub *data)
 
 	j = 0;
 	raycasting(data);
-	render_fov(data);
 	while (data->map[j])
 	{
 		i = 0;

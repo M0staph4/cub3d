@@ -56,7 +56,7 @@ typedef struct s_cub{
 }   t_cub;
 
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c);
+void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, int x);
 void	render_player(t_cub *data, int r);
 void	render_square(t_cub *data, int x, int y, int color);
 void	render_map(t_cub *data);
