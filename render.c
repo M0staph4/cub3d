@@ -20,11 +20,12 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, in
 	(void)c;
 	while (line_length(data, data->pixelX, data->pixelY))
 	{	
-	    pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
+		if(c)
+	    	pixel_put(&data->img_3D, (data->pixelX / data->i_2D) * 20, (data->pixelY / data->i_2D) * 20, color);
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
-	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2)) * cos(ray);
+	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
     data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
 	(void)ray;
 
@@ -65,23 +66,23 @@ void	render_square(t_cub *data, int x, int y, int color)
 	}
 }
 
-// void	render_fov(t_cub *data)
-// {
-// 	double	x;
-// 	double	l;
+void	render_fov(t_cub *data)
+{
+	double	x;
+	double	l;
 
-// 	x = -32;
-// 	l = data->rotation_angle;
-// 	double xx, y;
-// 	xx = (data->xpos / data->i_2D) * 20;
-// 	y = (data->ypos / data->i_2D) * 20;
-// 	while (x < 32)
-// 	{
-// 		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
-// 		x += 0.064 / 50;
-// 	}
-// 	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
-// }
+	x = -PI/6;
+	l = data->rotation_angle;
+	double xx, y;
+	xx = (data->xpos);
+	y = (data->ypos);
+	while (x < PI/6)
+	{
+		render_line(data,(xx + cos(l + x) * 1000) - xx,(y + sin(l + x) * 1000) - y,  0xCCC899, 1, 0);
+		x += 0.06 / 50;
+	}
+	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos,  0xE04080, 1, 0);
+}
 
 void	render_map(t_cub *data)
 {
@@ -97,11 +98,14 @@ void	render_map(t_cub *data)
 		{
 			if (data->map[j][i] == '1')
 				render_square(data,  20 * i, 20 * j, 0x3F4A4F);
+			else 
+				render_square(data,  20 * i, 20 * j, 0xFFFFFF);
 			i++;
 		}
 		j++;
 	}
 	render_player(data, 5);
+	render_fov(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 	// mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
 }
