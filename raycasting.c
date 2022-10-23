@@ -31,16 +31,16 @@ void    raycasting(t_cub *data)
 {
     int i = 0;
     int j;
-    double x  = -PI/6;
+    double x  = -32;
     double r = data->rotation_angle;
 
     while (i < WINDOW_WIDTH )
     {
-        if(x < PI/6)
+        if(x <= 32)
         {
             render_line(data, (data->xpos + cos(r + x) * 1000) - data->xpos,
-                (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, x);
-            x+= 0.06 / 50;
+                (data->ypos +  sin(r + x) * 1000) - data->ypos, 0xF96dFF, 0, x + r);
+            x+= 0.064 / 50;
         }
         j = 0;
         while(j < WINDOW_HEIGHT )

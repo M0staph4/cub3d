@@ -8,7 +8,7 @@ int line_length(t_cub *data, double x, double y)
 	return(1);
 }
 
-void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, int ray)
+void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, double ray)
 {
 	int		pixels;
 
@@ -25,9 +25,11 @@ void	render_line(t_cub *data, double deltaX, double deltaY, int color, int c, in
 	    data->pixelX += deltaX;
 	    data->pixelY += deltaY;
 	}
-	data->player_dis = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2));
-    data->wall = (data->i_2D * WINDOW_HEIGHT) / data->player_dis;
-	(void)ray;
+	float distance = sqrt(pow(data->xpos - data->pixelX , 2) + pow(data->ypos - data->pixelY, 2)) ;
+	// printf("%d\n", )
+	distance *=  cos((ray - data->rotation_angle));
+	float projectionplane = (WINDOW_WIDTH / 2) / tan((64 * (PI / 180)) / 2);
+	data->wall = (data->i_2D / distance) * projectionplane;
 
 }
 

@@ -3,93 +3,96 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: cel-mhan <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: cel-mhan <cel-mhan@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/12/07 04:05:08 by cel-mhan          #+#    #+#             */
-/*   Updated: 2021/12/07 04:07:53 by cel-mhan         ###   ########.fr       */
+/*   Created: 2021/12/10 23:45:27 by mmoutawa          #+#    #+#             */
+/*   Updated: 2022/10/22 20:13:34 by cel-mhan         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int	ftg_strlen(char *str)
+int	ftg_strlen(char *s)
 {
 	int	i;
 
 	i = 0;
-	if (!str)
+	if (!s)
 		return (0);
-	while (str[i])
+	while (s[i])
 		i++;
 	return (i);
 }
 
 char	*ftg_strjoin(char *s1, char *s2)
 {
-	char	*p;
-	int		len2;
+	int		j;
 	int		i;
-	int		len1;
+	char	*p;
 
-	len1 = ftg_strlen(s1);
-	len2 = ftg_strlen(s2);
-	p = (char *)malloc(sizeof(char) * (len1 + len2 + 1));
+	if (s2 == NULL)
+		return ((char *)s1);
+	i = ftg_strlen (s1);
+	j = ftg_strlen (s2);
+	p = malloc(i + j + 1);
 	if (p == NULL)
 		return (NULL);
+	j = 0;
 	i = 0;
-	while (i++ < len1)
-		p[i - 1] = s1[i - 1];
-	while (i++ < len1 + len2 + 1)
-		p[i - 2] = s2[i - len1 - 2];
-	p[len1 + len2] = '\0';
-	free(s1);
+	if (s1)
+	{
+		while (s1[i] != '\0')
+			p[j++] = s1[i++];
+	}
+	i = 0;
+	while (s2[i] != '\0')
+		p[j++] = s2[i++];
+	p[j] = '\0';
+	free (s1);
 	return (p);
 }
 
-char	*ftg_strdup(char *s)
+char	*ft_strdup(const char *s1)
 {
+	char	*dst;
 	int		i;
-	int		len;
-	char	*buff;
+	int		j;
 
 	i = 0;
-	len = ftg_strlen(s);
-	buff = malloc(sizeof(char) * len + 1);
-	if (!buff)
-		return (0);
-	while (s[i])
-	{
-		buff[i] = s[i];
+	j = 0;
+	while (s1[i] != '\0')
 		i++;
+	dst = (char *)malloc(i + 1);
+	if (dst == NULL)
+		return (NULL);
+	while (s1[j] != '\0')
+	{
+		dst[j] = s1[j];
+		j++;
 	}
-	buff[i] = '\0';
-	free(s);
-	return (buff);
+	dst[j] = '\0';
+	return (dst);
 }
 
-char	*ftg_substr(char	*s, int start, int len)
+char	*ftg_substr(char *s, int start, int len)
 {
+	char	*p;
 	int		i;
-	char	*str;
-	int		size;
 
 	i = 0;
-	size = len;
 	if (!s)
 		return (NULL);
-	if (start > ftg_strlen((char *)s) || s[0] == '\0')
-		return (ftg_strdup(""));
-	if (len > ftg_strlen(s))
-		size = ftg_strlen(s) - start + 1;
-	str = malloc(sizeof(char) * size + 1);
-	if (!str)
+	if (start > ftg_strlen(s))
+		return (ft_strdup(""));
+	p = (char *)malloc(len + 1);
+	if (!p)
 		return (NULL);
-	while (i < size)
+	while (i < len)
 	{
-		str[i] = s[start];
+		p[i] = s[start];
 		i++;
 		start++;
 	}
-	str[i] = '\0';
-	return (str);
+	p[i] = '\0';
+	return (p);
 }

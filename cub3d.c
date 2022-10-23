@@ -1,43 +1,6 @@
 #include "cub3d.h"
 
-int key_handler(int key, t_cub *data)
-{
-	if (key == KEY_UP)
-	{
-		data->walk = 1;
-		data->move_step = data->walk * data->move_speed;
-		if (check_wall_collision(data))
-		{
-			data->xpos += cos(data->rotation_angle) * data->move_step;
-			data->ypos += sin(data->rotation_angle) * data->move_step;
-			render_map(data);
-		}
-	}
-	else if (key == KEY_DOWN)
-	{
-		data->walk = -1;
-		data->move_step = data->walk * data->move_speed;
-		if (check_wall_collision(data))
-		{
-			data->xpos += cos(data->rotation_angle) * data->move_step;
-			data->ypos += sin(data->rotation_angle) * data->move_step;
-			render_map(data);
-		}
-	}
-	else if (key == KEY_RIGHT)
-	{
-		data->side = 1;
-		data->rotation_angle += data->side * data->rotation_speed;
-		render_map(data);
-	}
-	else if (key == KEY_LEFT)
-	{
-		data->side = -1;
-		data->rotation_angle += data->side * data->rotation_speed;
-		render_map(data);
-	}
-	return (0);	
-}
+
 
 double check_direction(t_cub *data)
 {
@@ -143,7 +106,12 @@ int main(int ac, char **av)
 	{
 		fd = open(av[1], O_RDONLY);
 		data.map = read_map(fd);
-		check_map(data.map);
-		window(&data);
+		if(!check_elements(&data))
+			window(&data);
+		// else
+		// {
+		// 	printf("Map not valid\n");
+		// 	exit(0);
+		// }
 	}
 }
