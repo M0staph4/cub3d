@@ -45,9 +45,9 @@ void    move_left(t_cub *data)
     if (check_wall_collision(data))
     {
 		if (data->rotation_angle < (PI / 2) && data->rotation_angle > PI3)
-    		data->xpos += cos(data->rotation_angle + 0.75) * data->move_step;
+    		data->xpos += cos(data->rotation_angle + 0.5) * data->move_step;
 		else
-			data->ypos += sin(data->rotation_angle + 0.75) * data->move_step;
+			data->xpos += sin(data->rotation_angle - 0.5) * data->move_step;
     	render_map(data);
     }
 }
@@ -59,10 +59,11 @@ void    move_right(t_cub *data)
     if (check_wall_collision(data))
     {
     	if (data->rotation_angle < (PI / 2) && data->rotation_angle > PI3)
-    		data->xpos += cos(data->rotation_angle + 0.75) * data->move_step;
+    		data->xpos += cos(data->rotation_angle + 0.5) * data->move_step;
+		// else if (data->rotation_angle > 0 && data->rotation_angle < PI)
+		// 	data->ypos += sin(data->rotation_angle + 0.5) * data->move_step;
 		else
-			data->ypos += sin(data->rotation_angle + 0.75) * data->move_step;
-    	
+			data->xpos += sin(data->rotation_angle - 0.5) * data->move_step;
     	render_map(data);
     }
 }

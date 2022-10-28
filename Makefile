@@ -1,7 +1,8 @@
 NAME = cub3d
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
-SRC = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c   map.c raycasting.c moves.c 
+SRC = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c \
+	map.c raycasting.c moves.c texture.c
 LIB = libft.a
 INC = -lmlx -framework OpenGL -framework AppKit 
 
@@ -35,5 +36,6 @@ fclean: clean
 	rm -f cub3d
 	rm -f $(LIBFT_A)
 	rm -f inc/libft/libft.a 
+	rm -f libft.a
 
 re : fclean all

@@ -1,7 +1,5 @@
 #include "cub3d.h"
 
-
-
 double check_direction(t_cub *data)
 {
 	int	i;
@@ -33,9 +31,9 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 3;
+	data->move_speed = 6;
 	data->rotation_angle = check_direction(data);
-	data->rotation_speed = 3 * (PI / 180);
+	data->rotation_speed = 6 * (PI / 180);
 }
 
 void player_pos_2D(t_cub *data)
@@ -62,56 +60,45 @@ void player_pos_2D(t_cub *data)
 	}
 }
 
-void	pixel_put(t_img *data, int x, int y, int color)
+int	mouse(t_cub *data)
 {
-	char	*dst;
-	dst = data->addr + (y * data->line + x * (data->bpp / 8));
-	*(int*)dst = color;
+	mlx_destroy_image(data->mlx, data->img_3D.mlx_img);
+	mlx_destroy_window(data->mlx, data->mlx_win);
+	exit(0);
+	return (0);
 }
-
-int	get_pixel_color(t_texture *tex)
-{
-	return ((int)tex->img.addr + (tex->texY * tex->img.line + tex->texX * (tex->img.bpp / 8)));
-}
-
 
 void	window(t_cub *data)
 {
 	int		i;
 	int		j;
-	int		x;
-	int		y;
+	
 	j = 0;
 	i = ft_strlen(data->map[0]);
-	char	*path = "bluestone.xpm";
 	data->i_2D = 50;
 	data->mlx = mlx_init();
 	data->mlx_win = mlx_new_window(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT, "Cub3d!");
 	data->img_3D.mlx_img = mlx_new_image(data->mlx, WINDOW_WIDTH, WINDOW_HEIGHT);
 	data->img_3D.addr = mlx_get_data_addr(data->img_3D.mlx_img, &data->img_3D.bpp, &data->img_3D.line, &data->img_3D.endian);
-	data->tex.texture = mlx_xpm_file_to_image(data->mlx, path, &x, &y);
-	data->tex.img.addr =  mlx_get_data_addr(data->tex.texture, &data->tex.img.bpp, &data->tex.img.line, &data->tex.img.endian);
+	load_texture(data);
 	player_pos_2D(data);
 	render_map(data);
 	mlx_hook(data->mlx_win, 2, 1L<<0,  key_handler, data);
+	mlx_hook(data->mlx_win, 17, 0L, mouse, data);
 	mlx_loop(data->mlx);
 }
 
 int main(int ac, char **av)
 {
 	int fd;
+	int i = 0;
 	t_cub data;
 
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
-		data.map = read_map(fd);
-		if(!check_elements(&data))
-			window(&data);
-		// else
-		// {
-		// 	printf("Map not valid\n");
-		// 	exit(0);
-		// }
+		data.file = read_map(fd);
+		i = check_elements(&data);
+		window(&data);
 	}
 }
