@@ -91,14 +91,14 @@ void	window(t_cub *data)
 int main(int ac, char **av)
 {
 	int fd;
-	int i = 0;
 	t_cub data;
 
 	if (ac == 2)
 	{
 		fd = open(av[1], O_RDONLY);
 		data.file = read_map(fd);
-		i = check_elements(&data);
-		window(&data);
+		if(data.file && check_elements(&data))
+			window(&data);
+		printf("rigola\n");
 	}
 }
