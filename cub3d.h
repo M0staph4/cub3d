@@ -82,5 +82,9 @@ int		check_wall_collision_2D(t_cub *data);
 int		get_pixel_color(t_texture *tex);
 int     key_handler(int key, t_cub *data);
 void	load_texture(t_cub *data);
+char *check_nb(char *color);
+int check_textures(t_cub *data);
+int check_player(char **map);
+int check_colors(t_cub *data);
 
 #endif

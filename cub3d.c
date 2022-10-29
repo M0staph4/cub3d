@@ -99,6 +99,6 @@ int main(int ac, char **av)
 		data.file = read_map(fd);
 		if(data.file && check_elements(&data))
 			window(&data);
-		printf("rigola\n");
+		// printf("rigola\n");
 	}
 }

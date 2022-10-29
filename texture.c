@@ -2,20 +2,16 @@
 
 void	load_texture(t_cub *data)
 {
-	char	*path = "xpm/eagle.xpm";
-	char	*path2 = "xpm/bluestone.xpm";
-	char	*path3 = "xpm/BlackWall.xpm";
-	char	*path4 = "xpm/purplestone.xpm";
 	int		x;
 	int		y;
 
-	data->tex.img[0].texture = mlx_xpm_file_to_image(data->mlx, path, &x, &y);
+	data->tex.img[0].texture = mlx_xpm_file_to_image(data->mlx, data->xpm_file[0], &x, &y);
 	data->tex.img[0].addr =  (unsigned int *)mlx_get_data_addr(data->tex.img[0].texture, &data->tex.img[0].bpp, &data->tex.img[0].line, &data->tex.img[0].endian);
-	data->tex.img[1].texture = mlx_xpm_file_to_image(data->mlx, path2, &x, &y);
+	data->tex.img[1].texture = mlx_xpm_file_to_image(data->mlx, data->xpm_file[1], &x, &y);
 	data->tex.img[1].addr =  (unsigned int *)mlx_get_data_addr(data->tex.img[1].texture, &data->tex.img[1].bpp, &data->tex.img[1].line, &data->tex.img[1].endian);
-	data->tex.img[2].texture = mlx_xpm_file_to_image(data->mlx, path3, &x, &y);
+	data->tex.img[2].texture = mlx_xpm_file_to_image(data->mlx, data->xpm_file[2], &x, &y);
 	data->tex.img[2].addr =  (unsigned int *)mlx_get_data_addr(data->tex.img[2].texture, &data->tex.img[2].bpp, &data->tex.img[2].line, &data->tex.img[2].endian);
-	data->tex.img[3].texture = mlx_xpm_file_to_image(data->mlx, path4, &x, &y);
+	data->tex.img[3].texture = mlx_xpm_file_to_image(data->mlx, data->xpm_file[3], &x, &y);
 	data->tex.img[3].addr =  (unsigned int *)mlx_get_data_addr(data->tex.img[3].texture, &data->tex.img[3].bpp, &data->tex.img[3].line, &data->tex.img[3].endian);
 }
 
