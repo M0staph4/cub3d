@@ -7,9 +7,9 @@ int check_wall_collision(t_cub *data)
 	
 	i = data->xpos + cos(data->rotation_angle) * data->move_step;
 	j = data->ypos + sin(data->rotation_angle) * data->move_step;
-	if(data->map[j / data->i_2D][i / data->i_2D] == '1')
-		return(0);
-	return(1);
+	if(data->map[j / data->i_2D][i / data->i_2D] == '0')
+		return(1);
+	return(0);
 }
 
 int set_xmp(char *xpm, t_cub *data, int x)
@@ -84,7 +84,7 @@ int check_all(t_cub *data)
 		while(data->file[j][i] == ' ')
 			i++;
 		if(data->file[j][i] == 'N' && data->file[j][i + 1] == 'O' && data->file[j][i + 2] == ' ')
-			x += set_xmp(data->file[j], data, 0);
+			x+= set_xmp(data->file[j], data, 0);
 		else if(data->file[j][i] == 'S' && data->file[j][i + 1] == 'O' && data->file[j][i + 2] == ' ')
 			x += set_xmp(data->file[j], data, 1);
 		else if(data->file[j][i] == 'W' && data->file[j][i + 1] == 'E' && data->file[j][i + 2] == ' ')

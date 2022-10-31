@@ -2,9 +2,9 @@
 
 int HitWall(t_cub *data, double x, double y)
 {
-	if (data->map[(int)y / data->i_2D][(int)x / data->i_2D] == '1')
-		return(0);
-	return(1);
+	if (data->map[(int)y / data->i_2D][(int)x / data->i_2D] == '0')
+		return(1);
+	return(0);
 }
 
 void	render_line(t_cub *data, double deltaX, double deltaY, double ray, int c)
@@ -19,6 +19,7 @@ void	render_line(t_cub *data, double deltaX, double deltaY, double ray, int c)
 	data->pixelY = data->ypos;
 	deltaX /= step;
 	deltaY /= step;
+	(void)c;
 	while (HitWall(data, data->pixelX, data->pixelY))
 	{	
 		if (!c)
@@ -71,7 +72,7 @@ void	render_fov(t_cub *data)
 	double	l;
 
 	l = data->rotation_angle;
-	render_line(data,(data->xpos + cos(l) * 1000) - data->xpos,(data->ypos + sin(l) * 1000) - data->ypos, 1, 0);
+	render_line(data,(data->xpos + cos(l)) - data->xpos,(data->ypos + sin(l)) - data->ypos, 1, 0);
 }
 
 void	render_map(t_cub *data)
@@ -92,7 +93,7 @@ void	render_map(t_cub *data)
 		}
 		j++;
 	}
-	render_player(data, 1);
+	render_player(data, 5);
 	render_fov(data);
 	mlx_put_image_to_window(data->mlx, data->mlx_win, data->img_3D.mlx_img, 0, 0);
 }

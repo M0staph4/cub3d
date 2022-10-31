@@ -81,5 +81,7 @@ int key_handler(int key, t_cub *data)
 		rotate_right(data);
 	else if (key == KEY_LEFT)
 		rotate_left(data);
+	else if (key == KEY_E)
+		render_map(data);
 	return (0);	
 }

@@ -31,7 +31,7 @@ void player_init(t_cub *data)
 {
 	data->side = 0;
 	data->walk = 0;
-	data->move_speed = 6;
+	data->move_speed = 20;
 	data->rotation_angle = check_direction(data);
 	data->rotation_speed = 6 * (PI / 180);
 }

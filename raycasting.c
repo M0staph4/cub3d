@@ -26,11 +26,11 @@ void    wall_projection(t_cub *data, int i)
             data->tex.texX = fmod(data->pixelY / 50, 1) * 50;
         data->tex.texY = ((j - ((WINDOW_HEIGHT - data->wall) / 2)) * 50) / data->wall;
         if (j < (WINDOW_HEIGHT - data->wall) / 2)
-            pixel_put(&data->img_3D, i, j, 0xFFFFFF);
+            pixel_put(&data->img_3D, i, j, 0xF2F7FA);
         else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
             pixel_put(&data->img_3D, i, j, get_pixel_color(&data->tex));
         else
-            pixel_put(&data->img_3D, i, j, 0x8D5524);
+            pixel_put(&data->img_3D, i, j, 0x536878);
         j++;
     }
 }

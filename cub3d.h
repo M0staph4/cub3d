@@ -12,8 +12,8 @@
 #define PI 3.1415926535
 #define PI2 1.5708
 #define PI3 4.71239
-#define WINDOW_WIDTH 1080
-#define WINDOW_HEIGHT 720
+#define WINDOW_WIDTH 1600
+#define WINDOW_HEIGHT 900
 #define FOV 64 * (PI / 2)
 
 typedef struct   s_img{
