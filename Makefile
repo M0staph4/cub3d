@@ -1,8 +1,9 @@
 NAME = cub3d
 CC = gcc
-CFLAGS = -Wall -Wextra -Werror  #-fsanitize=address -g
-SRC = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c render.c \
-	map.c raycasting.c moves.c texture.c map_tools.c
+CFLAGS = -Wall -Wextra -Werror  -fsanitize=address -g
+SRC = cub3d.c inc/gnl/get_next_line.c inc/gnl/get_next_line_utils.c Render.c \
+	map.c Raycasting.c moves.c Textures.c Player.c map_tools.c maths.c map_tools2.c \
+	map_tools3.c
 LIB = libft.a
 INC = -lmlx -framework OpenGL -framework AppKit 
 
