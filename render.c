@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   render.c                                           :+:      :+:    :+:   */
+/*   Render.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:18 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/01 23:11:25 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:21:25 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	render_player(t_cub *data, int r, int x)
 	}
 }
 
-void	render_square(t_cub *data, int x, int y, int color, int xx)
+void	render_square(t_cub *data, int x, int y, int xx)
 {
 	int	i;
 	int	j;
@@ -66,7 +66,7 @@ void	render_square(t_cub *data, int x, int y, int color, int xx)
 		j = 0;
 		while (j < xx)
 		{
-			pixel_put(&data->img_3d, x + j, y + i, color);
+			pixel_put(&data->img_3d, x + j, y + i, 0x00);
 			j++;
 		}
 		i++;
@@ -76,55 +76,34 @@ void	render_square(t_cub *data, int x, int y, int color, int xx)
 void	render_fov(t_cub *data, int x)
 {
 	double	l;
-(void)x;
+
 	l = data->rotation_angle;
 	data->deltax = ((data->xpos + cos(l) * 1000) - data->xpos);
-	data->deltay = ((data->ypos  + sin(l) * 1000) - data->ypos );
+	data->deltay = ((data->ypos + sin(l) * 1000) - data->ypos);
 	render_line(data, x, 0);
-}
-
-int long_line(t_cub *data)
-{
-	int i;
-	int j;
-	int x;
-
-	x = 0;
-	i = 0;
-	j = 0;
-	while(data->map[j])
-	{
-		i = ft_strlen(data->map[j]);
-		if(i > x)
-			x = i;
-		j++;
-	}
-	if(x < j)
-		return(j);
-	return(x);
 }
 
 void	render_map(t_cub *data)
 {
-	int	i;
-	int	j;
-	double x;
+	int		i;
+	int		j;
+	double	x;
 
 	j = 0;
 	raycasting(data);
-	x = (WINDOW_WIDTH) / (long_line(data) * 2);
+	x = (WINDOW_WIDTH) / (long_line(data) * 4);
 	while (data->map[j])
 	{
 		i = 0;
 		while (data->map[j][i])
 		{
 			if (data->map[j][i] == '1')
-				render_square(data, x * i, x * j, 0x3F4A4F, x);
+				render_square(data, x * i, x * j, x);
 			i++;
 		}
 		j++;
 	}
-	render_player(data, 6, x);
+	render_player(data, 3, x);
 	render_fov(data, x);
 	mlx_put_image_to_window(data->mlx,
 		data->mlx_win, data->img_3d.mlx_img, 0, 0);

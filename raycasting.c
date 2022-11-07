@@ -1,25 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   raycasting.c                                       :+:      :+:    :+:   */
+/*   Raycasting.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/31 21:23:15 by cel-mhan          #+#    #+#             */
-/*   Updated: 2022/11/01 17:45:30 by mmoutawa         ###   ########.fr       */
+/*   Updated: 2022/11/04 12:23:15 by mmoutawa         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
+int	long_line(t_cub *data)
+{
+	int	i;
+	int	j;
+	int	x;
+
+	x = 0;
+	i = 0;
+	j = 0;
+	while (data->map[j])
+	{
+		i = ft_strlen(data->map[j]);
+		if (i > x)
+			x = i;
+		j++;
+	}
+	if (x < j)
+		return (j);
+	return (x);
+}
+
 int	rgb_to_color(t_cub *data, char c)
 {
-	if(c == 'C')
-		return (((data->colors.r_c & 0xff) << 16) 
-			+ ((data->colors.g_c & 0xff) << 8) + (data->colors.b_c & 0xff));
+	if (c == 'C')
+		return (((data->colors.r_c) << 16)
+			+ ((data->colors.g_c) << 8) + (data->colors.b_c));
 	else
-		return (((data->colors.r_f & 0xff) << 16) 
-			+ ((data->colors.g_f & 0xff) << 8) + (data->colors.b_f & 0xff));
+		return (((data->colors.r_f) << 16)
+			+ ((data->colors.g_f) << 8) + (data->colors.b_f));
 }
 
 int	direction(t_cub *data)
@@ -43,9 +64,9 @@ int	direction(t_cub *data)
 void	wall_projection(t_cub *data, int i)
 {
 	int		j;
-	j = 0;
 	float	toppix;
 
+	j = 0;
 	while (j < WINDOW_HEIGHT)
 	{
 		toppix = (WINDOW_HEIGHT - data->wall) / 2;
@@ -54,9 +75,9 @@ void	wall_projection(t_cub *data, int i)
 		if (direction(data) == 2 || direction(data) == 4)
 			data->tex.tex_x = fmod(data->pixely / 50, 1) * 50;
 		data->tex.tex_y = ((j - toppix) * 50) / data->wall;
-		if (j < (WINDOW_HEIGHT - data->wall) / 2)
+		if (j < toppix)
 			pixel_put(&data->img_3d, i, j, rgb_to_color(data, 'C'));
-		else if (j < ((WINDOW_HEIGHT - data->wall) / 2) + data->wall)
+		else if (j < toppix + data->wall)
 			pixel_put(&data->img_3d, i, j, get_pixel_color(&data->tex));
 		else
 			pixel_put(&data->img_3d, i, j, rgb_to_color(data, 'F'));

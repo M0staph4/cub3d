@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   MapTools.c                                         :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmoutawa <mmoutawa@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/11/02 20:05:53 by cel-mhan          #+#    #+#             */
+/*   Updated: 2022/11/04 00:15:25 by mmoutawa         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "cub3d.h"
 
 int	its_ok(char *color, int i)
@@ -11,16 +23,12 @@ int	its_ok(char *color, int i)
 	return (i - 1);
 }
 
-char	*check_nb(char *color)
+char	*check_nb(char *color, int x, int j)
 {
 	int		i;
-	int		x;
-	int		j;
 	char	*nb;
 
 	nb = calloc(1, 12);
-	x = 0;
-	j = 0;
 	i = -1;
 	while (color[++i])
 	{
@@ -28,7 +36,7 @@ char	*check_nb(char *color)
 			x++;
 		if (color[i] != ' ' && color[i] != '\t')
 			nb[j++] = color[i];
-		if (color[i] == ' ' && ft_isdigit(color[i - 1]))
+		if ((color[i] == ' ' || color[i] == '\t') && ft_isdigit(color[i - 1]))
 		{
 			if (0 > its_ok(color, i))
 				return (NULL);
